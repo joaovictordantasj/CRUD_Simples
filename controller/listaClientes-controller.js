@@ -20,21 +20,23 @@ const criaNovaLinha = (nome, email, id) => {
 };
 
 const tabela = document.querySelector('[data-tabela]');
-tabela.addEventListener('click', (e) => {
+tabela.addEventListener('click', async (e) => {
   let botaoDeletar =
     e.target.className === 'botao-simples botao-simples--excluir';
 
   if (botaoDeletar) {
     const linhaCliente = e.target.closest('[data-id]');
     let id = linhaCliente.dataset.id;
-    clienteService.removeCliente(id).then(() => {
-      linhaCliente.remove();
-    });
+    await clienteService.removeCliente(id);
+    linhaCliente.remove();
   }
 });
 
-clienteService.listaClientes().then((data) => {
-  data.forEach((e) => {
+const render = async () => {
+  const listaClientes = await clienteService.listaClientes();
+  listaClientes.forEach((e) => {
     tabela.appendChild(criaNovaLinha(e.nome, e.email, e.id));
   });
-});
+};
+
+render();
