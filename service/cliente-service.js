@@ -6,9 +6,9 @@ const listaClientes = () => {
 
 const criaCliente = (nome, email) => {
   return fetch(`http://localhost:3000/profile`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       nome: nome,
@@ -19,7 +19,14 @@ const criaCliente = (nome, email) => {
   });
 };
 
+const removeCliente = (id) => {
+  return fetch(`http://localhost:3000/profile/${id}`, {
+    method: 'DELETE',
+  });
+};
+
 export const clienteService = {
   listaClientes,
   criaCliente,
+  removeCliente,
 };
